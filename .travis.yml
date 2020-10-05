@@ -2,4 +2,4 @@ install: gradle wrapper --gradle-version 6.4.1
 language: java
 
 jdk:
-  - openjdk14
+  - openjdk11
