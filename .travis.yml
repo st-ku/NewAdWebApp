@@ -1,4 +1,6 @@
-install: gradle wrapper --gradle-version 6.1.1
+install: gradle wrapper --gradle-version 6.4.1
+before_script:
+ - chmod +x gradlew
 language: java
 jdk:
   - oraclejdk11
