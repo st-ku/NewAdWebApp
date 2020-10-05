@@ -19,14 +19,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/add_new_ad">Create new Ad</a>
                 </li>
-                <li class="nav-item">
-                    <@l.logout />
-                </li>
             <#if user.isAdmin()>
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/">Admin page</a>
                 </li>
             </#if>
+                <li class="nav-item">
+                    <@l.logout />
+                </li>
             <#else>
                 <li class="nav-item">
                     <a class="nav-link" href="/registration">Register</a>
