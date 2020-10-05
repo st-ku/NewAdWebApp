@@ -1,4 +1,12 @@
 language: java
-
+install: gradle wrapper --gradle-version 6.1
 jdk:
-  - openjdk14
+  - oraclejdk11
+
+sudo: required
+
+before_install:
+ - chmod +x gradlew
+
+script:
+  - ./gradlew clean build -i --continue
