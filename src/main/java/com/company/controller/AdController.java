@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -49,7 +50,7 @@ public class AdController {
         model.addAttribute("pageEntity", page);
         return "main";
     }
-
+    @Secured({"ROLE_ADMIN"})
     @GetMapping("/delete/{id}")
     public String removeAd(@PathVariable("id") Long id) {
         this.adService.removeAd(id);
