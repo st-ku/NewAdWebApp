@@ -134,7 +134,7 @@ public class User implements UserDetails {
     }
 
     public String getEmail() {
-        return email;
+        return this.email.isEmpty() ? "0" : email;
     }
 
     public void setEmail(String email) {

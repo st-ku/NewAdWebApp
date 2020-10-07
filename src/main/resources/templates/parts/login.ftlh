@@ -3,7 +3,7 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">User Name :</label>
             <div class="col-sm-6">
-                <input type="text" name="username" value="<#if user??>${user.username}</#if>"
+                <input type="text" name="username" required="required" pattern="[A-Za-z0-9]{1,20}" value="<#if user??>${user.username}</#if>"
                        class="form-control ${(usernameError??)?string('is-invalid', '')}"
                        placeholder="User name" />
                 <#if usernameError??>
@@ -16,7 +16,7 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Password:</label>
             <div class="col-sm-6">
-                <input type="password" name="password"
+                <input type="password" name="password" required="required" pattern="[A-Za-z0-9]{1,20}"
                        class="form-control ${(passwordError??)?string('is-invalid', '')}"
                        placeholder="Password" />
                 <#if passwordError??>
@@ -30,7 +30,7 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Password confirm:</label>
                 <div class="col-sm-6">
-                    <input type="password" name="passwordConfirm"
+                    <input type="password" name="passwordConfirm" required="required" pattern="[A-Za-z0-9]{1,20}"
                            class="form-control ${(passwordConfirmError??)?string('is-invalid', '')}"
                            placeholder="Retype password" />
                     <#if passwordConfirmError??>
@@ -43,8 +43,8 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Phone:</label>
                 <div class="col-sm-6">
-                    <input type="tel" name="phoneNumber" value="<#if user??>${user.phoneNumber}</#if>"
-                           class="form-control ${(emailError??)?string('is-invalid', '')}"
+                    <input type="tel" name="phoneNumber" required="required" pattern="[A-Za-z0-9]{1,20}" value="<#if user??>${user.phoneNumber}</#if>"
+                           class="form-control"
                            placeholder="+37529*******" />
                 </div>
             </div>
