@@ -6,21 +6,21 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="inputEmail4">Email</label>
-                <input type="email" name="username" class="form-control" id="inputEmail4" placeholder="Email" value="${user.email}" disabled>
+                <input type="email" class="form-control" name="inputEmail4" placeholder="Email" value="${user.email}" disabled>
             </div>
             <div class="form-group col-md-6">
                 <label for="inputPhone">Phone number</label>
-                <input type="text" name="publicPhoneNumber" class="form-control" id="inputPhone" placeholder="Phone number" value="${user.getPhoneNumber()}">
+                <input type="text" class="form-control" name="adPhoneNumber" placeholder="Phone number" value="${user.getPhoneNumber()}" required="required">
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="inputAddress">Address</label>
-                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" disabled>
+                <input type="text" class="form-control" name="address" placeholder="1234 Main St" required="required">
             </div>
             <div class="form-group col-md-6">
                 <label for="inputCity">City</label>
-                <input type="text" class="form-control" id="inputCity" placeholder="Hrodna" disabled>
+                <input type="text" class="form-control" name="location" placeholder="Hrodna" required="required">
             </div>
         </div>
         <div class="form-row">
@@ -34,12 +34,12 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="inputDaysAlive">Ad days alive</label>
-                <input type="number" name="adDaysAlive" class="form-control" id="inputDaysAlive" placeholder="Number of days" value="3">
+                <input type="number" name="adDaysAlive" class="form-control" placeholder="Number of days" value="3" required="required" pattern="[0-9]{1,20}">
             </div>
         </div>
         <div class="form-group col-md-6">
             <label for="exampleFormControlTextarea1">Text:</label>
-            <textarea class="form-control col-md-6" name="content" id="exampleFormControlTextarea1" rows="15"></textarea>
+            <textarea class="form-control col-md-6" name="textContent" id="exampleFormControlTextarea1" rows="15" required="required"></textarea>
         </div>
         <div class="form-group">
             <div class="form-check">

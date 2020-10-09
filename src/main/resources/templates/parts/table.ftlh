@@ -15,7 +15,7 @@
             <tr>
                 <td><a href="/ad_data/${ad.adId}">${ad.user.username}</a></td>
                 <td><a href="/ad_data/${ad.adId}">${ad.adCategory.categoryName}</a></td>
-                <td><a href="/ad_data/${ad.adId}">${ad.content}</a></td>
+                <td><a href="/ad_data/${ad.adId}">${ad.textContent}</a></td>
                 <td><a href="/ad_data/${ad.adId}">${ad.date}</a></td>
                 <td>Is ${ad.numberOfFiles} files inside</td>
                   <#if isAdmin>

@@ -44,10 +44,6 @@ dependencies {
     compile group: 'commons-validator', name: 'commons-validator', version: '1.6'
 // https://mvnrepository.com/artifact/commons-lang/commons-lang
     compile group: 'commons-lang', name: 'commons-lang', version: '2.2'
-// https://mvnrepository.com/artifact/com.oracle.jdbc/ojdbc8
-
-
-
 
 }
 

@@ -72,12 +72,11 @@ public class AdController {
     }
 
     @PostMapping(value = "/save")
-    public String saveAd(@Valid Ad adFromForm, AdCategory adCategory, @RequestParam(required = false) MultipartFile[] fileUpload) throws SQLException, IOException {
+    public String saveAd(@Valid Ad adFromForm, @RequestParam(name = "adCategory") AdCategory adCategory, @RequestParam(required = false) MultipartFile[] fileUpload) throws SQLException, IOException {
         User user = (User) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal();
         adFromForm.setUploadFile(adService.handleFileUpload(fileUpload));
         adFromForm.setAdCategory(adCategory);
-        adFromForm.setCategory(adCategory.getCategoryName());
         adService.saveAd(adFromForm, user);
         return "redirect:/";
     }

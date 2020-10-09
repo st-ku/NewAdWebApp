@@ -18,22 +18,22 @@
         </div>
         <div class="form-group col-md-6">
             <label for="inputPhone">Phone number</label>
-            <input type="text" name="publicPhoneNumber" class="form-control" id="inputPhone" placeholder="Phone number" value="${currentAd.publicPhoneNumber}" disabled>
+            <input type="text" name="publicPhoneNumber" class="form-control" id="inputPhone" placeholder="Phone number" value="${currentAd.adPhoneNumber}" disabled>
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="inputAddress">Address</label>
-            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St <DEV>" disabled>
+            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St <DEV>" value="${currentAd.address}" disabled>
         </div>
         <div class="form-group col-md-6">
-            <label for="inputCity">City</label>
-            <input type="text" class="form-control" id="inputCity" placeholder="Hrodna <DEV>" disabled>
+            <label for="inputCity">Location:</label>
+            <input type="text" class="form-control" id="inputCity" placeholder="Hrodna <DEV>" value="${currentAd.location}" disabled>
         </div>
     </div>
     <div class="form-group col-md-6">
         <label for="exampleFormControlTextarea1">Text:</label>
-        <textarea class="form-control-lg col-md-6" name="content" id="exampleFormControlTextarea1" rows="15" maxlength="500" disabled >${currentAd.getContent()}</textarea>
+        <textarea class="form-control-lg col-md-6" name="content" id="exampleFormControlTextarea1" rows="15" maxlength="500" disabled >${currentAd.getTextContent()}</textarea>
     </div>
     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">

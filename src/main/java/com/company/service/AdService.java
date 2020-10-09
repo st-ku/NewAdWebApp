@@ -1,7 +1,6 @@
 package com.company.service;
 
 import com.company.entity.Ad;
-import com.company.entity.AdCategory;
 import com.company.entity.UploadFile;
 import com.company.entity.User;
 import com.company.repository.AdRepository;
@@ -37,8 +36,6 @@ public class AdService {
 		if (ad.getAdDaysAlive() == null) {
 			ad.setAdDaysAlive(3);
 		}
-		AdCategory adCategory = adCategoryService.findAdCategoryByCategoryName(ad.getCategory());
-		ad.setAdCategory(adCategory);
 		adRepository.save(ad);
 		return true;
 	}

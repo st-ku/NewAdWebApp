@@ -25,7 +25,7 @@ public class User implements UserDetails {
     @Column(name = "EMAIL")
     @NotBlank(message = "Email cannot be empty")
     private String email;
-    @Column(name = "PHONE_NUMBER")
+    @Column(name = "PHONE_NUMBER", columnDefinition = "varchar(255) default 'not defined'")
     private String phoneNumber;
     @OneToOne(cascade = CascadeType.REFRESH)
     private Role role;

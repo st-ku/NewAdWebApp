@@ -15,15 +15,17 @@ public class Ad {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long adId;
-    @Column(name = "CONTENT")
+    @Column(name = "CONTENT", columnDefinition = "varchar(255) default 'not defined'")
     @NotBlank(message = "Please fill the message")
     @Length(max = 2048, message = "Message too long (more than 2kB)")
-    private String content;
-    @Column(name = "CATEGORY")
-    private String category;
-    @Column(name = "PUBLIC_PHONE_NUMBER")
+    private String textContent;
+    @Column(name = "LOCATION" , columnDefinition = "varchar(255) default 'not defined'" )
+    private String location;
+    @Column(name = "ADDRESS" , columnDefinition = "varchar(255) default 'not defined'")
+    private String address;
+    @Column(name = "AD_PHONE_NUMBER" , columnDefinition = "varchar(255) default 'not defined'")
     @NotBlank(message = "Phone number cannot be empty")
-    private String publicPhoneNumber;
+    private String adPhoneNumber;
     @Column(name = "DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
@@ -46,16 +48,32 @@ public class Ad {
         this.adId = age;
     }
 
-    public String getContent() {
-        return content;
+    public String getTextContent() {
+        return textContent;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setTextContent(String content) {
+        this.textContent = content;
     }
 
     public Ad() {
 
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public User getUser() {
@@ -91,20 +109,12 @@ public class Ad {
     }
 
 
-    public String getPublicPhoneNumber() {
-        return publicPhoneNumber;
+    public String getAdPhoneNumber() {
+        return adPhoneNumber;
     }
 
-    public void setPublicPhoneNumber(String publicPhoneNumber) {
-        this.publicPhoneNumber = publicPhoneNumber;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
+    public void setAdPhoneNumber(String publicPhoneNumber) {
+        this.adPhoneNumber = publicPhoneNumber;
     }
 
     public AdCategory getAdCategory() {
