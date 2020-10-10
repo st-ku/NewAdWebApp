@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 
 @Component
@@ -28,7 +29,7 @@ public class Ad {
     private String adPhoneNumber;
     @Column(name = "DATE")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
+    private Date creationDate;
     @Column(name = "AVAILABLE", columnDefinition = "boolean default false", nullable = false)
     private Boolean available = false;
     @ManyToOne(cascade = CascadeType.REFRESH)
@@ -84,12 +85,12 @@ public class Ad {
         this.user = user;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getCreationDate() {
+        return creationDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setCreationDate(Date date) {
+        this.creationDate = date;
     }
 
     public Boolean getAvailable() {
@@ -142,5 +143,18 @@ public class Ad {
             }
         }
         return i;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ad ad = (Ad) o;
+        return adId.equals(ad.adId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(adId);
     }
 }

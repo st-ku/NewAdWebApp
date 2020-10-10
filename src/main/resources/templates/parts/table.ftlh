@@ -1,4 +1,4 @@
-<#macro table pageEntity isAdmin>
+<#macro table pageEntity isAdmin canEdit>
     <#if pageEntity??>
         <table id="dtBasicExample" class="table table-striped table-bordered table-sm w-auto">
         <thead>
@@ -16,12 +16,16 @@
                 <td><a href="/ad_data/${ad.adId}">${ad.user.username}</a></td>
                 <td><a href="/ad_data/${ad.adId}">${ad.adCategory.categoryName}</a></td>
                 <td><a href="/ad_data/${ad.adId}">${ad.textContent}</a></td>
-                <td><a href="/ad_data/${ad.adId}">${ad.date}</a></td>
+                <td><a href="/ad_data/${ad.adId}">${ad.creationDate}</a></td>
                 <td>Is ${ad.numberOfFiles} files inside</td>
                   <#if isAdmin>
                 <td><a class="btn btn-sm btn-warning" role="button"
                        href="/delete/${ad.adId}">Delete</a></td>
                   </#if>
+                <#if canEdit>
+                    <td><a class="btn btn-sm btn-warning" role="button"
+                           href="/edit/${ad.adId}">Edit</a></td>
+                </#if>
             </tr>
         </#list>
     </#if>

@@ -8,7 +8,7 @@
         </div>
         <div class="form-group col-md-6">
             <label for="adDate">Created:</label>
-            <input type="text" name="adDate" class="form-control" id="adDate" value="${currentAd.date?date}" disabled>
+            <input type="text" name="adDate" class="form-control" id="adDate" value="${currentAd.creationDate?date}" disabled>
         </div>
     </div>
     <div class="form-row">

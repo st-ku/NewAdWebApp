@@ -29,25 +29,19 @@ public class AdService {
 	AdCategoryService adCategoryService;
 
 	@Transactional
-	public boolean saveAd(Ad ad, User user) {
+	public void saveAd(Ad ad, User user) {
 		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-		ad.setDate(date);
+		ad.setCreationDate(date);
 		ad.setUser(user);
-		if (ad.getAdDaysAlive() == null) {
-			ad.setAdDaysAlive(3);
-		}
 		adRepository.save(ad);
-		return true;
 	}
 
 	@Transactional
-	public boolean removeAd(Long id) {
+	public void removeAd(Long id) {
 		Ad adFromDB = adRepository.findAdsByAdId(id);
 		if (adFromDB != null) {
 			adRepository.delete(adFromDB);
-			return true;
-		} else
-			return false;
+		}
 
 	}
 	@Transactional

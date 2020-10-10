@@ -20,7 +20,7 @@ public class Scheduler {
     public void checkAdDays() {
         java.sql.Date currentDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
         for (Ad foreachAd : adService.listAds()) {
-            if (DateUtils.addDays(foreachAd.getDate(), foreachAd.getAdDaysAlive()).before(currentDate)) {
+            if (DateUtils.addDays(foreachAd.getCreationDate(), foreachAd.getAdDaysAlive()).before(currentDate)) {
                 adService.removeAd(foreachAd.getAdId());
             }
         }

@@ -44,10 +44,11 @@ public class AdController {
     }
 
     @GetMapping(value = "/userAds")
-    public String UserAdsList(@RequestParam(name = "category", defaultValue = "All", required = false) String category, Model model, @PageableDefault(sort = {"adId"}, direction = Sort.Direction.DESC) Pageable pageable, @AuthenticationPrincipal User user) {
+    public String UserAdsList(Model model, @PageableDefault(sort = {"adId"}, direction = Sort.Direction.DESC) Pageable pageable, @AuthenticationPrincipal User user) {
         Page<Ad> page = adService.listAdsByUser(pageable, user);
         model.addAttribute("url", "/ads");
         model.addAttribute("pageEntity", page);
+        model.addAttribute("canEdit",  true);
         return "main";
     }
     @Secured({"ROLE_ADMIN"})
@@ -58,9 +59,15 @@ public class AdController {
     }
 
     @GetMapping("/ad_data/{id}")
-    public String adDataD(@PathVariable("id") Long id,  Model model) {
-        model.addAttribute("currentAd", this.adService.getAdById(id));
+    public String adDataD(@PathVariable("id") Ad ad,  Model model) {
+        model.addAttribute("currentAd", ad);
         return "ad_data";
+    }
+    @GetMapping("/edit/{id}")
+    public String editAd(@PathVariable("id") Ad ad,  Model model) {
+        model.addAttribute("currentAd", ad);
+        model.addAttribute("categoriesList", adCategoryService.listCategories());
+        return "edit_ad";
     }
 
 
@@ -75,7 +82,9 @@ public class AdController {
     public String saveAd(@Valid Ad adFromForm, @RequestParam(name = "adCategory") AdCategory adCategory, @RequestParam(required = false) MultipartFile[] fileUpload) throws SQLException, IOException {
         User user = (User) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal();
-        adFromForm.setUploadFile(adService.handleFileUpload(fileUpload));
+         if (fileUpload != null) {
+             adFromForm.setUploadFile(adService.handleFileUpload(fileUpload));
+        }
         adFromForm.setAdCategory(adCategory);
         adService.saveAd(adFromForm, user);
         return "redirect:/";

@@ -4,5 +4,5 @@
 <#import "parts/table.ftlh" as t>
 <@c.page>
     <@p.pager pageEntity url />
-    <@t.table pageEntity isAdmin/>
+    <@t.table pageEntity isAdmin canEdit??/>
 </@c.page>
