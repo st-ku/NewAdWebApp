@@ -28,7 +28,7 @@ public class UserListener {
         User user = this.userService.findUserByName(userDetails.getUsername());
         WebTraffic webTraffic = new WebTraffic();
         user.setWebTraffic(webTraffic);
-        userService.saveUser(user);
+        userService.saveNewUser(user);
     }
 
 }

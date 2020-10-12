@@ -22,17 +22,19 @@
         </ul>
 
     <#if user??>
-    <div class="dropdown show">
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            ${name}
-        </a>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="/userAds?${currentUserId}">My ads</a>
-            <#if user.isAdmin()>
-                <a class="dropdown-item" href="/admin/">Admin page</a>
-            </#if>
-        </div>
-    </div>
+
+        <details>
+            <summary>${name}</summary>
+                <ul>
+                    <li><a href="/userAds?${currentUserId}">My ads</a></li>
+                    <li><a href="/user_profile/${currentUserId}">My profile</a></li>
+                    <#if user.isAdmin()>
+                        <li><a href="/admin/">Admin page</a></li>
+                    </#if>
+
+                </ul>
+            </details>
+        </details>
     </#if>
 
 </nav>

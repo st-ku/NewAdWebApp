@@ -51,7 +51,7 @@ public class RegistrationController {
             model.addAttribute("emailError", "Wrong Email");
             return "registration";
         }
-        if (!userService.saveUser(userForm)) {
+        if (!userService.saveNewUser(userForm)) {
             model.addAttribute("usernameError", "User with this Username Already Exists");
             return "registration";
         }

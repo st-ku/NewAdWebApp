@@ -47,7 +47,7 @@ public class UserService implements UserDetailsService {
 		return userRepository.findAll();
 	}
 
-	public boolean saveUser(User user) {
+	public boolean saveNewUser(User user) {
 		Optional<User> userFromDB = userRepository.findByUsername(user.getUsername());
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		if (userFromDB.isPresent()) {
@@ -56,6 +56,12 @@ public class UserService implements UserDetailsService {
 		userRepository.save(user);
 		return true;
 	}
+	public boolean updateUser(User user) {
+		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		userRepository.save(user);
+		return true;
+	}
+
 
 
 	public void deleteUser(Long userId) {

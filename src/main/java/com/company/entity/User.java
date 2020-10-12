@@ -20,7 +20,6 @@ public class User implements UserDetails {
     @NotBlank(message = "Password cannot be empty")
     private String password;
     @Transient
-    @NotBlank(message = "Password cannot be empty")
     private String passwordConfirm;
     @Column(name = "EMAIL")
     @NotBlank(message = "Email cannot be empty")
