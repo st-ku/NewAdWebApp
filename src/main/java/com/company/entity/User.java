@@ -1,5 +1,7 @@
 package com.company.entity;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -33,6 +35,9 @@ public class User implements UserDetails {
     private List<Ad> userAds;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<WebTraffic> webTraffic;
+    @OneToMany(cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<PrivateMessage> privateMessagesList;
 
     public User() {
         Role role = new Role();
@@ -47,6 +52,21 @@ public class User implements UserDetails {
 
     public Date getLastLoginDate() {
         return !webTraffic.isEmpty() ? webTraffic.get(webTraffic.size() - 1).getDate() : new Date();
+    }
+
+    public void setWebTraffic(List<WebTraffic> webTraffic) {
+        this.webTraffic = webTraffic;
+    }
+
+    public List<PrivateMessage> getPrivateMessagesList() {
+        return this.privateMessagesList;
+    }
+
+    public void setPrivateMessagesList(List<PrivateMessage> privateMessagesList) {
+        this.privateMessagesList = privateMessagesList;
+    }
+    public void addToPrivateMessagesList(PrivateMessage privateMessagesList) {
+        this.privateMessagesList.add(privateMessagesList);
     }
 
     public void setWebTraffic(WebTraffic webTraffic) {

@@ -1,4 +1,4 @@
-<#macro table pageEntity isAdmin canEdit>
+<#macro table pageEntity isAdmin canEdit user>
     <#if pageEntity??>
         <table id="dtBasicExample" class="table table-striped table-bordered table-sm w-auto">
         <thead>
@@ -7,7 +7,7 @@
             <th class="th-sm">Category</th>
             <th class="th-sm" >Content</th>
             <th class="th-sm">Date</th>
-            <th class="th-sm">Photo</th>
+            <th class="th-sm">Files</th>
         </tr>
         </thead>
 
@@ -25,6 +25,10 @@
                 <#if canEdit>
                     <td><a class="btn btn-sm btn-warning" role="button"
                            href="/edit/${ad.adId}">Edit</a></td>
+                </#if>
+                <#if user>
+                     <td><a class="btn btn-sm btn-warning" role="button"
+                       href="/private_messages/new/${ad.user.id}">Message to ${ad.user.username}</a></td>
                 </#if>
             </tr>
         </#list>

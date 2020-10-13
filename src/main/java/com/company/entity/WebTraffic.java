@@ -19,7 +19,6 @@ public class WebTraffic {
 
     public WebTraffic() {
         this.date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-        ;
     }
 
     public Date getDate() {

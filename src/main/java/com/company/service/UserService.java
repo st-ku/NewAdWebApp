@@ -38,11 +38,6 @@ public class UserService implements UserDetailsService {
 		return userFromDb.orElse(new User());
 	}
 
-	public User findUserByName(String name) {
-		Optional<User> userFromDb = userRepository.findByUsername(name);
-		return userFromDb.orElse(new User());
-	}
-
 	public Iterable<User> allUsers() {
 		return userRepository.findAll();
 	}

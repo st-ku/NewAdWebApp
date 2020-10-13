@@ -27,6 +27,7 @@
             <summary>${name}</summary>
                 <ul>
                     <li><a href="/userAds?${currentUserId}">My ads</a></li>
+                    <li><a href="/private_messages/view">My messages</a></li>
                     <li><a href="/user_profile/${currentUserId}">My profile</a></li>
                     <#if user.isAdmin()>
                         <li><a href="/admin/">Admin page</a></li>

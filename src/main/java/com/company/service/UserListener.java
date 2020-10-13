@@ -25,7 +25,7 @@ public class UserListener {
     @EventListener
     public void onApplicationEvent(InteractiveAuthenticationSuccessEvent event) {
         UserDetails userDetails = (UserDetails) event.getAuthentication().getPrincipal();
-        User user = this.userService.findUserByName(userDetails.getUsername());
+        User user = (User) this.userService.loadUserByUsername(userDetails.getUsername());
         WebTraffic webTraffic = new WebTraffic();
         user.setWebTraffic(webTraffic);
         userService.saveNewUser(user);
