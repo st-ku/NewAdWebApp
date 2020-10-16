@@ -20,14 +20,14 @@ public class PrivateMessagesController {
         this.privateMessageService = privateMessageService;
     }
 
-    @GetMapping("/view")
-    public String messagesList(@AuthenticationPrincipal User user, Model model) {
-        if (user.getPrivateMessagesList().isEmpty()){
+    @GetMapping("/view/{id}")
+    public String messagesList(@AuthenticationPrincipal User user, @PathVariable("id") User fromUser, Model model) {
+        if (privateMessageService.getAllInboxMessagesFromUser(fromUser.getId(),user.getId()).isEmpty()){
             model.addAttribute("messagesListError", "No messages");
             return "private_messages";
         }
         else
-            model.addAttribute("messagesList", user.getPrivateMessagesList());
+            model.addAttribute("messagesList", privateMessageService.getAllInboxMessagesFromUser(fromUser.getId(),user.getId()));
         return "private_messages";
     }
     @GetMapping("/new/{id}")
@@ -36,9 +36,15 @@ public class PrivateMessagesController {
         model.addAttribute("toUser", toUser);
         return "new_message";
     }
+    @GetMapping("/dialogs/")
+    public String userDialogs(@AuthenticationPrincipal User toUser,  Model model) {
+        model.addAttribute("userList", privateMessageService.getAllUsersWhoWrote(toUser.getId()));
+        model.addAttribute("messagesList", privateMessageService.getTotalInboxMessages(toUser.getId()));
+        return "dialogs";
+    }
     @PostMapping
     public String sendMessage(@RequestParam("toUserId") User toUser,@AuthenticationPrincipal User fromUser, @Valid PrivateMessage privateMessage) {
         privateMessageService.sendMessage(fromUser, toUser , privateMessage);
-        return "redirect:/private_messages/view";
+        return "redirect:/private_messages/dialogs/";
     }
 }

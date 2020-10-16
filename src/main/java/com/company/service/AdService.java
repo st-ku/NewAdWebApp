@@ -64,9 +64,7 @@ public class AdService {
 
 	@Transactional
 	public Page<Ad> listAdsByUser(Pageable pageable, User user) {
-
 		return adRepository.findAdsByUser(pageable, user);
-
 	}
 
 	public Set<UploadFile> handleFileUpload(MultipartFile[] fileUpload) throws SQLException, IOException {

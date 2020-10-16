@@ -8,13 +8,17 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 @Service
 public class UserService implements UserDetailsService {
 
 	private UserRepository userRepository;
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private Pattern BCRYPT_PATTERN = Pattern
+			.compile("\\A\\$2(a|y|b)?\\$(\\d\\d)\\$[./0-9A-Za-z]{53}");
 
 	public UserService(UserRepository userRepository,
 			BCryptPasswordEncoder bCryptPasswordEncoder) {
@@ -41,28 +45,32 @@ public class UserService implements UserDetailsService {
 	public Iterable<User> allUsers() {
 		return userRepository.findAll();
 	}
-
+	@Transactional
 	public boolean saveNewUser(User user) {
 		Optional<User> userFromDB = userRepository.findByUsername(user.getUsername());
-		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		encodePassword(user);
 		if (userFromDB.isPresent()) {
 			return false;
 		}
 		userRepository.save(user);
 		return true;
 	}
-	public boolean updateUser(User user) {
-		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+	@Transactional
+	public void updateUser(User user) {
+		encodePassword(user);
 		userRepository.save(user);
-		return true;
 	}
-
-
-
+	@Transactional
 	public void deleteUser(Long userId) {
 		if (userRepository.findById(userId).isPresent()) {
 			userRepository.deleteById(userId);
 		}
 	}
+	private void encodePassword(User user) {
+		if (!BCRYPT_PATTERN.matcher(user.getPassword()).matches()) {
+			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		}
+	}
+
 
 }
