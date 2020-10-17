@@ -35,23 +35,12 @@
         <label for="exampleFormControlTextarea1">Text:</label>
         <textarea class="form-control-lg col-md-6" name="content" id="exampleFormControlTextarea1" rows="15" maxlength="500" disabled >${currentAd.getTextContent()}</textarea>
     </div>
-    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-            <#list currentAd.uploadFile as file>
-                <div class="carousel-item active">
-                    <img src="data:image/jpg;base64, ${file.toString()}" class="d-block w-100" alt="...">
-                </div>
-            </#list>
-        </div>
-        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
+    <#if (currentAd.getNumberOfFiles()>0)>
+        <#list currentAd.uploadFile as file>
+            <img src="data:image/jpg;base64, ${file.toString()}" class="d-block" alt="...">
+        </#list>
+    </#if>
+
 
 
 

@@ -38,5 +38,14 @@ public class PrivateMessageService {
         }
         return userList;
     }
+    public void updatePrivateMessage (PrivateMessage privateMessage) {
+        privateMessageRepository.save(privateMessage);
+    }
+    public boolean checkNewPrivateMessages(Long toUserId) {
+        for (PrivateMessage privateMessage:privateMessageRepository.findAllByToUser_Id(toUserId)) {
+            if (!privateMessage.getViewed()) return true;
+        }
+        return false;
+    }
 
 }

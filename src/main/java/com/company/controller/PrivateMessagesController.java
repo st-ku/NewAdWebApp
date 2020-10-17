@@ -28,6 +28,10 @@ public class PrivateMessagesController {
         }
         else
             model.addAttribute("messagesList", privateMessageService.getAllInboxMessagesFromUser(fromUser.getId(),user.getId()));
+        for (PrivateMessage privateMessage: privateMessageService.getAllInboxMessagesFromUser(fromUser.getId(),user.getId())) {
+            privateMessage.setViewed(true);
+            privateMessageService.updatePrivateMessage(privateMessage);
+        }
         return "private_messages";
     }
     @GetMapping("/new/{id}")

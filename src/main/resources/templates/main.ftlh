@@ -3,6 +3,9 @@
 <#import "parts/pager.ftlh" as p>
 <#import "parts/table.ftlh" as t>
 <@c.page>
-    <@p.pager pageEntity url />
+    <#if hasNewMessages=true>
+        you have new messages
+    </#if>
+    <@p.pager pageEntity url/>
     <@t.table pageEntity isAdmin canEdit?? user??/>
 </@c.page>

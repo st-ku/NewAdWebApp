@@ -5,6 +5,7 @@ import com.company.entity.AdCategory;
 import com.company.entity.User;
 import com.company.service.AdCategoryService;
 import com.company.service.AdService;
+import com.company.service.PrivateMessageService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -29,17 +30,24 @@ import java.sql.SQLException;
 public class AdController {
     private AdService adService;
     private AdCategoryService adCategoryService;
+    private PrivateMessageService privateMessageService;
 
-    public AdController(AdService adService, AdCategoryService adCategoryService) {
+    public AdController(AdService adService, AdCategoryService adCategoryService, PrivateMessageService privateMessageService)  {
         this.adService = adService;
         this.adCategoryService = adCategoryService;
+        this.privateMessageService = privateMessageService;
     }
 
     @GetMapping(value = "/")
-    public String home(Model model, @PageableDefault(sort = {"adId"}, direction = Sort.Direction.DESC) Pageable pageable) {
+    public String home(Model model, @PageableDefault(sort = {"adId"}, direction = Sort.Direction.DESC) Pageable pageable, @AuthenticationPrincipal User user) {
         Page<Ad> page = adService.listAdsNew(pageable);
         model.addAttribute("url", "/");
         model.addAttribute("pageEntity", page);
+        if (user!=null) {
+            model.addAttribute("hasNewMessages", privateMessageService.checkNewPrivateMessages(user.getId()));
+        }
+        else
+            model.addAttribute("hasNewMessages", false);
         return "main";
     }
 
