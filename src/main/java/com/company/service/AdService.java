@@ -4,29 +4,23 @@ import com.company.entity.Ad;
 import com.company.entity.UploadFile;
 import com.company.entity.User;
 import com.company.repository.AdRepository;
-import com.company.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class AdService {
-	@Autowired
-	AdRepository adRepository;
-	@Autowired
-	UserRepository userRepository;
-	@Autowired
-	AdCategoryService adCategoryService;
+	private AdRepository adRepository;
+
+	public AdService(AdRepository adRepository) {
+		this.adRepository = adRepository;
+	}
 
 	@Transactional
 	public void saveAd(Ad ad, User user) {
@@ -38,15 +32,12 @@ public class AdService {
 
 	@Transactional
 	public void removeAd(Long id) {
-		Ad adFromDB = adRepository.findAdsByAdId(id);
-		if (adFromDB != null) {
-			adRepository.delete(adFromDB);
+		Optional<Ad> adFromDB = adRepository.findAdsByAdId(id);
+		if (adFromDB.isPresent()) {
+			adRepository.delete(adFromDB.get());
 		}
+		else throw new EntityNotFoundException("User with"+id+"not found");
 
-	}
-	@Transactional
-	public Ad getAdById(Long id) {
-		return adRepository.findAdsByAdId(id);
 	}
 
 	@Transactional
@@ -56,10 +47,8 @@ public class AdService {
 	}
 
 	@Transactional
-	public Page<Ad> listAdsNew(Pageable pageable) {
-
+	public Page<Ad> listAds(Pageable pageable) {
 		return adRepository.findAll(pageable);
-
 	}
 
 	@Transactional
@@ -67,7 +56,7 @@ public class AdService {
 		return adRepository.findAdsByUser(pageable, user);
 	}
 
-	public Set<UploadFile> handleFileUpload(MultipartFile[] fileUpload) throws SQLException, IOException {
+	public Set<UploadFile> handleFileUpload(MultipartFile[] fileUpload) throws IOException {
 		Set<UploadFile> uploadFileSet = new HashSet<>();
 		if (fileUpload != null && fileUpload.length > 0) {
 			for (MultipartFile aFile : fileUpload) {

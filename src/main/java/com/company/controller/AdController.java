@@ -40,7 +40,7 @@ public class AdController {
 
     @GetMapping(value = "/")
     public String home(Model model, @PageableDefault(sort = {"adId"}, direction = Sort.Direction.DESC) Pageable pageable, @AuthenticationPrincipal User user) {
-        Page<Ad> page = adService.listAdsNew(pageable);
+        Page<Ad> page = adService.listAds(pageable);
         model.addAttribute("url", "/");
         model.addAttribute("pageEntity", page);
         if (user!=null) {
@@ -52,11 +52,12 @@ public class AdController {
     }
 
     @GetMapping(value = "/userAds")
-    public String UserAdsList(Model model, @PageableDefault(sort = {"adId"}, direction = Sort.Direction.DESC) Pageable pageable, @AuthenticationPrincipal User user) {
+    public String userAdsList(Model model, @PageableDefault(sort = {"adId"}, direction = Sort.Direction.DESC) Pageable pageable, @AuthenticationPrincipal User user) {
         Page<Ad> page = adService.listAdsByUser(pageable, user);
         model.addAttribute("url", "/ads");
         model.addAttribute("pageEntity", page);
         model.addAttribute("canEdit",  true);
+        model.addAttribute("hasNewMessages", false);
         return "main";
     }
     @Secured({"ROLE_ADMIN"})
