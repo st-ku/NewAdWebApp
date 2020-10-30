@@ -5,7 +5,7 @@
 Refactored code & front side of my old MVC webapp (<a href="https://github.com/st-ku/AdWebApp">AdWebApp</a>). Now it has Freemarker front side (with usage Bootstrap), still works with Hibernate, Spring Security, Heroku pg db, Apache Tomcat. 
 
 Deployed on Heroku: <a href="https://newadwebapp.herokuapp.com/">https://newadwebapp.herokuapp.com/</a>  
-Admin Login:ADMIN & Pass:ADMIN
+Admin Login:ADMIN & Pass:00000
 
 This app is still in development.
 
