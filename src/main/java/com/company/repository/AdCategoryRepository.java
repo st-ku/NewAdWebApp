@@ -10,5 +10,4 @@ public interface AdCategoryRepository extends JpaRepository<AdCategory, Integer>
     AdCategory findAdCategoryByCategoryId(Integer id);
 
     AdCategory findAdCategoryByCategoryName(String name);
-
 }

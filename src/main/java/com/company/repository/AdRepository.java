@@ -11,6 +11,8 @@ import java.util.Optional;
 
 @Repository
 public interface AdRepository extends JpaRepository<Ad, Long> {
+
     Optional<Ad> findAdsByAdId(Long id);
+
     Page<Ad> findAdsByUser(Pageable pageable, User user);
 }

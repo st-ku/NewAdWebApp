@@ -21,34 +21,38 @@ public class PrivateMessagesController {
     }
 
     @GetMapping("/view/{id}")
-    public String messagesList(@AuthenticationPrincipal User user, @PathVariable("id") User fromUser, Model model) {
-        if (privateMessageService.getAllInboxMessagesFromUser(fromUser.getId(),user.getId()).isEmpty()){
+    public String messagesList(@AuthenticationPrincipal User user,
+                               @PathVariable("id") User fromUser,
+                               Model model) {
+        if (privateMessageService.getAllInboxMessagesFromUser(fromUser.getId(), user.getId()).isEmpty()) {
             model.addAttribute("messagesListError", "No messages");
             return "private_messages";
-        }
-        else
-            model.addAttribute("messagesList", privateMessageService.getAllInboxMessagesFromUser(fromUser.getId(),user.getId()));
-        for (PrivateMessage privateMessage: privateMessageService.getAllInboxMessagesFromUser(fromUser.getId(),user.getId())) {
+        } else
+            model.addAttribute("messagesList", privateMessageService.getAllInboxMessagesFromUser(fromUser.getId(), user.getId()));
+        for (PrivateMessage privateMessage : privateMessageService.getAllInboxMessagesFromUser(fromUser.getId(), user.getId())) {
             privateMessage.setViewed(true);
             privateMessageService.updatePrivateMessage(privateMessage);
         }
         return "private_messages";
     }
+
     @GetMapping("/new/{id}")
-    public String newMessage(@AuthenticationPrincipal User fromUser, @PathVariable("id") User toUser,  Model model) {
+    public String newMessage(@AuthenticationPrincipal User fromUser, @PathVariable("id") User toUser, Model model) {
         model.addAttribute("fromUser", fromUser);
         model.addAttribute("toUser", toUser);
         return "new_message";
     }
+
     @GetMapping("/dialogs/")
-    public String userDialogs(@AuthenticationPrincipal User toUser,  Model model) {
+    public String userDialogs(@AuthenticationPrincipal User toUser, Model model) {
         model.addAttribute("userList", privateMessageService.getAllUsersWhoWrote(toUser.getId()));
         model.addAttribute("messagesList", privateMessageService.getTotalInboxMessages(toUser.getId()));
         return "dialogs";
     }
+
     @PostMapping
-    public String sendMessage(@RequestParam("toUserId") User toUser,@AuthenticationPrincipal User fromUser, @Valid PrivateMessage privateMessage) {
-        privateMessageService.sendMessage(fromUser, toUser , privateMessage);
+    public String sendMessage(@RequestParam("toUserId") User toUser, @AuthenticationPrincipal User fromUser, @Valid PrivateMessage privateMessage) {
+        privateMessageService.sendMessage(fromUser, toUser, privateMessage);
         return "redirect:/private_messages/dialogs/";
     }
 }

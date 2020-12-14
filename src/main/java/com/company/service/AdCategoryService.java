@@ -18,7 +18,6 @@ public class AdCategoryService {
     @Transactional
     public List<AdCategory> listCategories() {
         return adCategoryRepository.findAll();
-
     }
 
     public AdCategory findAdCategoryByCategoryId(Integer id) {

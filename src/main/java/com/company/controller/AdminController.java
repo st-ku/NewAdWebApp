@@ -1,5 +1,6 @@
 package com.company.controller;
 
+import com.company.service.UserService;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,8 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import com.company.service.UserService;
 
 @Controller
 @Secured({"ROLE_ADMIN"})
@@ -20,7 +19,7 @@ public class AdminController {
         this.userService = userService;
     }
 
-    @GetMapping("")
+    @GetMapping
     public String adminPage(Model model) {
         model.addAttribute("allUsers", userService.allUsers());
         return "admin";
@@ -31,6 +30,4 @@ public class AdminController {
         userService.deleteUser(id);
         return "redirect:/admin";
     }
-
-
 }

@@ -15,62 +15,62 @@ import java.util.regex.Pattern;
 @Service
 public class UserService implements UserDetailsService {
 
-	private UserRepository userRepository;
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	private final Pattern BCRYPT_PATTERN = Pattern
-			.compile("\\A\\$2(a|y|b)?\\$(\\d\\d)\\$[./0-9A-Za-z]{53}");
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final Pattern BCRYPT_PATTERN = Pattern
+            .compile("\\A\\$2(a|y|b)?\\$(\\d\\d)\\$[./0-9A-Za-z]{53}");
 
-	public UserService(UserRepository userRepository,
-			BCryptPasswordEncoder bCryptPasswordEncoder) {
-		this.userRepository = userRepository;
-		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-	}
+    public UserService(UserRepository userRepository,
+                       BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userRepository = userRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
-	@Override
-	public UserDetails loadUserByUsername(String username) {
-		Optional<User> user = userRepository.findByUsername(username);
+    @Override
+    public UserDetails loadUserByUsername(String username) {
+        Optional<User> user = userRepository.findByUsername(username);
+        if (user.isEmpty()) {
+            throw new UsernameNotFoundException("User not found");
+        }
+        return user.orElse(new User());
+    }
 
-		if (user.isEmpty()) {
-			throw new UsernameNotFoundException("User not found");
-		}
+    public User findUserById(Long userId) {
+        Optional<User> userFromDb = userRepository.findById(userId);
+        return userFromDb.orElse(new User());
+    }
 
-		return user.orElse(new User());
-	}
+    public Iterable<User> allUsers() {
+        return userRepository.findAll();
+    }
 
-	public User findUserById(Long userId) {
-		Optional<User> userFromDb = userRepository.findById(userId);
-		return userFromDb.orElse(new User());
-	}
+    @Transactional
+    public boolean saveNewUser(User user) {
+        Optional<User> userFromDB = userRepository.findByUsername(user.getUsername());
+        encodePassword(user);
+        if (userFromDB.isPresent()) {
+            return false;
+        }
+        userRepository.save(user);
+        return true;
+    }
 
-	public Iterable<User> allUsers() {
-		return userRepository.findAll();
-	}
-	@Transactional
-	public boolean saveNewUser(User user) {
-		Optional<User> userFromDB = userRepository.findByUsername(user.getUsername());
-		encodePassword(user);
-		if (userFromDB.isPresent()) {
-			return false;
-		}
-		userRepository.save(user);
-		return true;
-	}
-	@Transactional
-	public void updateUser(User user) {
-		encodePassword(user);
-		userRepository.save(user);
-	}
-	@Transactional
-	public void deleteUser(Long userId) {
-		if (userRepository.findById(userId).isPresent()) {
-			userRepository.deleteById(userId);
-		}
-	}
-	private void encodePassword(User user) {
-		if (!BCRYPT_PATTERN.matcher(user.getPassword()).matches()) {
-			user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		}
-	}
+    @Transactional
+    public void updateUser(User user) {
+        encodePassword(user);
+        userRepository.save(user);
+    }
 
+    @Transactional
+    public void deleteUser(Long userId) {
+        if (userRepository.findById(userId).isPresent()) {
+            userRepository.deleteById(userId);
+        }
+    }
 
+    private void encodePassword(User user) {
+        if (!BCRYPT_PATTERN.matcher(user.getPassword()).matches()) {
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        }
+    }
 }

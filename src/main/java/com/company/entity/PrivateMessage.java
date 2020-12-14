@@ -8,65 +8,53 @@ import java.util.Date;
 @Entity
 @Component
 public class PrivateMessage {
-	@Id
-	@Column(unique = true, nullable = false)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer messageId;
-	private String messageText;
-	@OneToOne
-	private User fromUser;
-	@OneToOne
-	private User toUser;
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date creationDate;
-	@Column(columnDefinition = "boolean default false")
-	private Boolean isViewed=false;
+    @Id
+    @Column(unique = true, nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer messageId;
+    private String messageText;
+    @OneToOne
+    private User fromUser;
+    @OneToOne
+    private User toUser;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creationDate;
+    @Column(columnDefinition = "boolean default false")
+    private Boolean isViewed = false;
 
-	public Boolean getViewed() {
-		return isViewed;
-	}
+    public Boolean getViewed() {
+        return isViewed;
+    }
 
-	public void setViewed(Boolean viewed) {
-		isViewed = viewed;
-	}
+    public void setViewed(Boolean viewed) {
+        isViewed = viewed;
+    }
 
-	public Integer getMessageId() {
-		return messageId;
-	}
+    public Integer getMessageId() {
+        return messageId;
+    }
 
-	public void setMessageId(Integer messageId) {
-		this.messageId = messageId;
-	}
+    public String getMessageText() {
+        return messageText;
+    }
 
-	public String getMessageText() {
-		return messageText;
-	}
+    public User getFromUser() {
+        return fromUser;
+    }
 
-	public void setMessageText(String messageText) {
-		this.messageText = messageText;
-	}
+    public void setFromUser(User fromUserId) {
+        this.fromUser = fromUserId;
+    }
 
-	public User getFromUser() {
-		return fromUser;
-	}
+    public void setToUser(User toUserId) {
+        this.toUser = toUserId;
+    }
 
-	public void setFromUser(User fromUserId) {
-		this.fromUser = fromUserId;
-	}
+    public Date getCreationDate() {
+        return creationDate;
+    }
 
-	public User getToUser() {
-		return toUser;
-	}
-
-	public void setToUser(User toUserId) {
-		this.toUser = toUserId;
-	}
-
-	public Date getCreationDate() {
-		return creationDate;
-	}
-
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
-	}
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
 }

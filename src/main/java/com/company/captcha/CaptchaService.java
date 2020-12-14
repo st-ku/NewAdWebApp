@@ -10,8 +10,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 
+import static java.util.Objects.isNull;
+
 @Service("captchaService")
-public class CaptchaService  {
+public class CaptchaService {
     CaptchaSettings captchaSettings;
 
     public CaptchaService(CaptchaSettings captchaSettings) {
@@ -19,7 +21,7 @@ public class CaptchaService  {
     }
 
     public boolean verify(String gRecaptchaResponse) {
-        if (gRecaptchaResponse == null || gRecaptchaResponse.length() == 0) {
+        if (isNull(gRecaptchaResponse) || gRecaptchaResponse.length() == 0) {
             return false;
         }
         try {
@@ -46,5 +48,4 @@ public class CaptchaService  {
             return false;
         }
     }
-
 }

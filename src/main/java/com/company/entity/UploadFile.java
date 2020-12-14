@@ -32,7 +32,6 @@ public class UploadFile {
         this.fileName = fileName;
     }
 
-
     public byte[] getData() {
         return data;
     }

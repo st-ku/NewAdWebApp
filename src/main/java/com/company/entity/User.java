@@ -23,7 +23,7 @@ public class User implements UserDetails {
     private String passwordConfirm;
     @Column(name = "EMAIL", columnDefinition = "varchar(255) default 'not defined'")
     @NotBlank(message = "Email cannot be empty")
-    private String email ;
+    private String email;
     @Column(name = "PHONE_NUMBER", columnDefinition = "varchar(255) default 'not defined'")
     private String phoneNumber = "0";
     @OneToOne(cascade = CascadeType.REFRESH)
@@ -52,6 +52,7 @@ public class User implements UserDetails {
     public void setWebTraffic(List<WebTraffic> webTraffic) {
         this.webTraffic = webTraffic;
     }
+
     public void setWebTraffic(WebTraffic webTraffic) {
         this.webTraffic.add(webTraffic);
     }

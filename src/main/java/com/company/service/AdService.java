@@ -16,56 +16,53 @@ import java.util.*;
 
 @Service
 public class AdService {
-	private AdRepository adRepository;
+    private AdRepository adRepository;
 
-	public AdService(AdRepository adRepository) {
-		this.adRepository = adRepository;
-	}
+    public AdService(AdRepository adRepository) {
+        this.adRepository = adRepository;
+    }
 
-	@Transactional
-	public void saveAd(Ad ad, User user) {
-		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-		ad.setCreationDate(date);
-		ad.setUser(user);
-		adRepository.save(ad);
-	}
+    @Transactional
+    public void saveAd(Ad ad, User user) {
+        java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+        ad.setCreationDate(date);
+        ad.setUser(user);
+        adRepository.save(ad);
+    }
 
-	@Transactional
-	public void removeAd(Long id) {
-		Optional<Ad> adFromDB = adRepository.findAdsByAdId(id);
-		if (adFromDB.isPresent()) {
-			adRepository.delete(adFromDB.get());
-		}
-		else throw new EntityNotFoundException("User with"+id+"not found");
+    @Transactional
+    public void removeAd(Long id) {
+        Optional<Ad> adFromDB = adRepository.findAdsByAdId(id);
+        if (adFromDB.isPresent()) {
+            adRepository.delete(adFromDB.get());
+        } else throw new EntityNotFoundException("User with" + id + "not found");
+    }
 
-	}
+    @Transactional
+    public List<Ad> listAds() {
+        return adRepository.findAll();
+    }
 
-	@Transactional
-	public List<Ad> listAds() {
-		return adRepository.findAll();
+    @Transactional
+    public Page<Ad> listAds(Pageable pageable) {
+        return adRepository.findAll(pageable);
+    }
 
-	}
+    @Transactional
+    public Page<Ad> listAdsByUser(Pageable pageable, User user) {
+        return adRepository.findAdsByUser(pageable, user);
+    }
 
-	@Transactional
-	public Page<Ad> listAds(Pageable pageable) {
-		return adRepository.findAll(pageable);
-	}
-
-	@Transactional
-	public Page<Ad> listAdsByUser(Pageable pageable, User user) {
-		return adRepository.findAdsByUser(pageable, user);
-	}
-
-	public Set<UploadFile> handleFileUpload(MultipartFile[] fileUpload) throws IOException {
-		Set<UploadFile> uploadFileSet = new HashSet<>();
-		if (fileUpload != null && fileUpload.length > 0) {
-			for (MultipartFile aFile : fileUpload) {
-				UploadFile uploadFile = new UploadFile();
-				uploadFile.setFileName(aFile.getOriginalFilename());
-				uploadFile.setData(aFile.getBytes());
-				uploadFileSet.add(uploadFile);
-			}
-		}
-		return uploadFileSet;
-	}
+    public Set<UploadFile> handleFileUpload(MultipartFile[] fileUpload) throws IOException {
+        Set<UploadFile> uploadFileSet = new HashSet<>();
+        if (fileUpload != null && fileUpload.length > 0) {
+            for (MultipartFile aFile : fileUpload) {
+                UploadFile uploadFile = new UploadFile();
+                uploadFile.setFileName(aFile.getOriginalFilename());
+                uploadFile.setData(aFile.getBytes());
+                uploadFileSet.add(uploadFile);
+            }
+        }
+        return uploadFileSet;
+    }
 }

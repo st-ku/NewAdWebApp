@@ -20,11 +20,11 @@ public class Ad {
     @NotBlank(message = "Please fill the message")
     @Length(max = 2048, message = "Message too long (more than 2kB)")
     private String textContent;
-    @Column(name = "LOCATION" , columnDefinition = "varchar(255) default 'not defined'" )
+    @Column(name = "LOCATION", columnDefinition = "varchar(255) default 'not defined'")
     private String location;
-    @Column(name = "ADDRESS" , columnDefinition = "varchar(255) default 'not defined'")
+    @Column(name = "ADDRESS", columnDefinition = "varchar(255) default 'not defined'")
     private String address;
-    @Column(name = "AD_PHONE_NUMBER" , columnDefinition = "varchar(255) default 'not defined'")
+    @Column(name = "AD_PHONE_NUMBER", columnDefinition = "varchar(255) default 'not defined'")
     @NotBlank(message = "Phone number cannot be empty")
     private String adPhoneNumber;
     @Column(name = "DATE")
@@ -58,7 +58,6 @@ public class Ad {
     }
 
     public Ad() {
-
     }
 
     public String getLocation() {

@@ -35,5 +35,4 @@ public class AdCategory {
     public String toString() {
         return categoryName;
     }
-
 }

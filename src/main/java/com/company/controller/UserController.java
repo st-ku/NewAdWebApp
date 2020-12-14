@@ -26,8 +26,11 @@ public class UserController {
         model.addAttribute("user", user);
         return "user_profile";
     }
+
     @PostMapping
-    public String updateUser(@Valid User user, BindingResult bindingResult, Model model) {
+    public String updateUser(@Valid User user,
+                             BindingResult bindingResult,
+                             Model model) {
         if (!user.getPassword().equals(user.getPasswordConfirm())) {
             model.addAttribute("passwordConfirmError", "Password isn't match");
             return "user_profile";

@@ -3,9 +3,10 @@ package com.company.captcha;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
+
 @Configuration
 @Component
-@ConfigurationProperties (prefix = "captcha")
+@ConfigurationProperties(prefix = "captcha")
 public class CaptchaSettings {
     private String siteV2;
     private String secretV2;
@@ -34,5 +35,4 @@ public class CaptchaSettings {
     public void setSecretV2(String secretV2) {
         this.secretV2 = secretV2;
     }
-
 }

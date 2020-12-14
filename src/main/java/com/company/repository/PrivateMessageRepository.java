@@ -8,7 +8,8 @@ import java.util.List;
 
 @Repository
 public interface PrivateMessageRepository extends CrudRepository<PrivateMessage, Long> {
-   List<PrivateMessage> findAllByToUser_Id (Long toUserId);
-   List<PrivateMessage> findAllByFromUser_IdAndToUser_Id(Long fromUserId,Long toUserId);
 
+    List<PrivateMessage> findAllByToUser_Id(Long toUserId);
+
+    List<PrivateMessage> findAllByFromUser_IdAndToUser_Id(Long fromUserId, Long toUserId);
 }

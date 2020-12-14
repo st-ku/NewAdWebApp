@@ -12,7 +12,7 @@ import java.util.Set;
 
 @Service
 public class PrivateMessageService {
-   private PrivateMessageRepository privateMessageRepository;
+    private PrivateMessageRepository privateMessageRepository;
 
     public PrivateMessageService(PrivateMessageRepository privateMessageRepository) {
         this.privateMessageRepository = privateMessageRepository;
@@ -23,29 +23,33 @@ public class PrivateMessageService {
         privateMessage.setFromUser(fromUser);
         privateMessage.setToUser(toUser);
         privateMessageRepository.save(privateMessage);
-     }
-     public List<PrivateMessage> getTotalInboxMessages(Long toUserId) {
-      return privateMessageRepository.findAllByToUser_Id(toUserId);
-     }
-    public List<PrivateMessage> getAllInboxMessagesFromUser(Long fromUserId, Long toUserId) {
-        return privateMessageRepository.findAllByFromUser_IdAndToUser_Id(fromUserId,toUserId);
     }
+
+    public List<PrivateMessage> getTotalInboxMessages(Long toUserId) {
+        return privateMessageRepository.findAllByToUser_Id(toUserId);
+    }
+
+    public List<PrivateMessage> getAllInboxMessagesFromUser(Long fromUserId, Long toUserId) {
+        return privateMessageRepository.findAllByFromUser_IdAndToUser_Id(fromUserId, toUserId);
+    }
+
     public Set<User> getAllUsersWhoWrote(Long userId) {
         HashSet<User> userList = new HashSet<>();
-        for (PrivateMessage privateMessage:
-        privateMessageRepository.findAllByToUser_Id(userId)) {
+        for (PrivateMessage privateMessage :
+                privateMessageRepository.findAllByToUser_Id(userId)) {
             userList.add(privateMessage.getFromUser());
         }
         return userList;
     }
-    public void updatePrivateMessage (PrivateMessage privateMessage) {
+
+    public void updatePrivateMessage(PrivateMessage privateMessage) {
         privateMessageRepository.save(privateMessage);
     }
+
     public boolean checkNewPrivateMessages(Long toUserId) {
-        for (PrivateMessage privateMessage:privateMessageRepository.findAllByToUser_Id(toUserId)) {
+        for (PrivateMessage privateMessage : privateMessageRepository.findAllByToUser_Id(toUserId)) {
             if (!privateMessage.getViewed()) return true;
         }
         return false;
     }
-
 }
