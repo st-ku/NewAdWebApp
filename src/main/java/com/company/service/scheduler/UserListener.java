@@ -8,6 +8,8 @@ import org.springframework.security.authentication.event.InteractiveAuthenticati
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 
 public class UserListener {
@@ -18,6 +20,7 @@ public class UserListener {
     }
 
     @EventListener
+    @Transactional
     public void onApplicationEvent(InteractiveAuthenticationSuccessEvent event) {
         UserDetails userDetails = (UserDetails) event.getAuthentication().getPrincipal();
         User user = (User) this.userService.loadUserByUsername(userDetails.getUsername());

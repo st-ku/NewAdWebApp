@@ -21,18 +21,18 @@ public class User implements UserDetails {
     private String password;
     @Transient
     private String passwordConfirm;
-    @Column(name = "EMAIL")
+    @Column(name = "EMAIL", columnDefinition = "varchar(255) default 'not defined'")
     @NotBlank(message = "Email cannot be empty")
-    private String email;
+    private String email ;
     @Column(name = "PHONE_NUMBER", columnDefinition = "varchar(255) default 'not defined'")
-    private String phoneNumber;
+    private String phoneNumber = "0";
     @OneToOne(cascade = CascadeType.REFRESH)
     private Role role;
     @Column(name = "LAST_LOGIN_DATE")
     @OneToMany(cascade = CascadeType.ALL)
     private List<Ad> userAds;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<WebTraffic> webTraffic;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<WebTraffic> webTraffic = new ArrayList<>();
 
     public User() {
         Role role = new Role();
@@ -52,7 +52,6 @@ public class User implements UserDetails {
     public void setWebTraffic(List<WebTraffic> webTraffic) {
         this.webTraffic = webTraffic;
     }
-
     public void setWebTraffic(WebTraffic webTraffic) {
         this.webTraffic.add(webTraffic);
     }

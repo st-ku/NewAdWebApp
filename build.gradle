@@ -45,6 +45,9 @@ dependencies {
     compile group: 'commons-validator', name: 'commons-validator', version: '1.6'
 // https://mvnrepository.com/artifact/commons-lang/commons-lang
     compile group: 'commons-lang', name: 'commons-lang', version: '2.2'
+    // https://mvnrepository.com/artifact/com.h2database/h2
+    compile group: 'com.h2database', name: 'h2', version: '1.4.199'
+
 
 }
 
